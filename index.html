@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+!function(){
+  document.documentElement.setAttribute('data-theme',
+    localStorage.getItem('af_dark_mode')==='1'?'dark':'light');
+}();
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#4f46e5"/>
+<title>Create Account · AcademeForge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Sora:wght@700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --p:#4f46e5;--p2:#3730a3;--pl:#818cf8;
+  --acc:#06b6d4;--ok:#22c55e;--err:#ef4444;--warn:#f59e0b;
+  --bg:#f0f2ff;--surface:#fff;--card:rgba(255,255,255,.98);
+  --nav:rgba(255,255,255,.95);--inp:#f4f5fb;
+  --grp:rgba(79,70,229,.06);--grph:rgba(79,70,229,.10);
+  --t1:#0f0e2a;--t2:#4b5563;--tm:#9ca3af;
+  --b1:rgba(79,70,229,.15);--bc:rgba(79,70,229,.20);--bi:#d1d5db;
+  --sh:0 4px 24px rgba(79,70,229,.12),0 1px 3px rgba(0,0,0,.05);
+  --she:0 12px 40px rgba(79,70,229,.15);
+  --shb:0 4px 16px rgba(79,70,229,.28);
+  --r1:8px;--r2:12px;--r3:16px;--r4:24px;--rf:9999px;
+  --fd:'Sora',sans-serif;--fb:'Nunito',sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#0c0b1d;--surface:#120f2a;--card:rgba(30,27,60,.98);
+  --nav:rgba(18,15,42,.98);--inp:#1e1b3c;
+  --grp:rgba(129,140,248,.08);--grph:rgba(129,140,248,.14);
+  --t1:#f0eeff;--t2:#a5a3c2;--tm:#6b6a8a;
+  --b1:rgba(129,140,248,.18);--bc:rgba(129,140,248,.25);--bi:rgba(129,140,248,.20);
+  --sh:0 8px 32px rgba(0,0,0,.45);--she:0 12px 40px rgba(0,0,0,.55);
+  --shb:0 4px 16px rgba(79,70,229,.40);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{font-size:15px;-webkit-text-size-adjust:100%;height:100%;height:100dvh;}
+body{
+  font-family:var(--fb);background:var(--bg);color:var(--t1);
+  min-height:100dvh;display:flex;align-items:center;justify-content:center;
+  padding:20px;
+}
+button{font-family:var(--fb);cursor:pointer;border:none;background:none;color:inherit;}
+a{text-decoration:none;color:var(--p);font-weight:800;}
+input{font-family:var(--fb);-webkit-user-select:text;-moz-user-select:text;user-select:text;}
+.hidden{display:none!important;}
+
+/* CONTAINER & CARD */
+.auth-container { width:100%; max-width: 440px; }
+.auth-card{
+  border-radius:var(--r4);background:var(--card);border:1px solid var(--bc);
+  box-shadow:var(--sh);padding:32px 24px;position:relative;overflow:hidden;
+}
+.auth-card::before{content:'';position:absolute;inset:-80px -90px auto auto;width:190px;height:190px;border-radius:50%;background:rgba(79,70,229,.08);pointer-events:none;}
+.auth-card::after{content:'';position:absolute;inset:auto auto -95px -90px;width:210px;height:210px;border-radius:50%;background:rgba(6,182,212,.07);pointer-events:none;}
+
+.auth-icon{
+  position:relative;z-index:1;width:64px;height:64px;border-radius:20px;
+  margin:0 auto 16px;display:grid;place-items:center;font-size:30px;
+  background:linear-gradient(135deg,rgba(79,70,229,.12),rgba(6,182,212,.10));border:1px solid var(--b1);
+}
+.auth-title{
+  position:relative;z-index:1;font-family:var(--fd);font-size:24px;font-weight:900;
+  text-align:center;color:var(--t1);letter-spacing:-.03em;margin-bottom:6px;
+}
+.auth-sub{
+  position:relative;z-index:1;font-size:13.5px;color:var(--t2);text-align:center;
+  line-height:1.6;margin-bottom:24px;font-weight:600;
+}
+
+/* FORM ELEMENTS */
+.form-box{position:relative;z-index:1;}
+.form-label{display:block;font-size:12.5px;font-weight:800;color:var(--t1);margin:12px 0 6px;}
+.form-input{
+  width:100%;min-height:48px;padding:12px 14px;border-radius:var(--r2);
+  border:1px solid var(--bc);background:var(--inp);color:var(--t1);
+  font-size:14px;font-weight:700;outline:none;transition:all 0.2s;
+}
+.form-input:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(79,70,229,.12);background:var(--surface);}
+.form-input::placeholder{color:var(--tm);font-weight:600;}
+
+/* CONSENT CHECKBOXES */
+.consent-group {
+  display: flex; flex-direction: column; gap: 14px;
+  margin-top: 16px; padding: 16px;
+  background: var(--grp); border-radius: var(--r2); border: 1px solid var(--b1);
+}
+.consent-item {
+  display: flex; align-items: flex-start; gap: 12px; cursor: pointer;
+}
+.consent-checkbox {
+  appearance: none; -webkit-appearance: none;
+  width: 22px; height: 22px; border-radius: 6px;
+  background: var(--surface); border: 1.5px solid var(--bc);
+  flex-shrink: 0; margin-top: 2px; position: relative;
+  cursor: pointer; transition: all 0.2s;
+}
+.consent-checkbox:checked {
+  background: var(--p); border-color: var(--p);
+}
+.consent-checkbox:checked::after {
+  content: ''; position: absolute; top: 4px; left: 7px;
+  width: 5px; height: 10px; border: solid white;
+  border-width: 0 2px 2px 0; transform: rotate(45deg);
+}
+.consent-text {
+  font-size: 13.5px; line-height: 1.5; color: var(--t2); font-weight: 600;
+}
+
+/* BUTTONS */
+.main-btn{
+  width:100%;min-height:50px;padding:13px;border-radius:var(--r2);
+  margin-top:20px;font-size:14.5px;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,var(--p),var(--p2));box-shadow:var(--shb);
+  transition: transform 0.2s, opacity 0.2s;
+}
+.main-btn:active{transform:scale(.985);}
+.main-btn:disabled{opacity:0.7;pointer-events:none;}
+
+.otp-area{margin-top:16px; padding-top:16px; border-top:1px dashed var(--b1);}
+
+/* MESSAGES */
+.msg-box{
+  display:none;margin-top:16px;padding:12px 14px;border-radius:var(--r2);
+  font-size:13.5px;font-weight:800;line-height:1.45;
+}
+.msg-box.ok{display:block;background:rgba(34,197,94,.10);color:#166534;border:1px solid rgba(34,197,94,.18);}
+.msg-box.err{display:block;background:rgba(239,68,68,.10);color:#991b1b;border:1px solid rgba(239,68,68,.18);}
+.msg-box.info{display:block;background:rgba(79,70,229,.08);color:var(--p);border:1px solid var(--b1);}
+[data-theme="dark"] .msg-box.ok{color:#4ade80;}
+[data-theme="dark"] .msg-box.err{color:#f87171;}
+
+/* SUCCESS VIEW */
+#boxSuccess { text-align: center; padding: 24px 0; animation: fadeIn 0.4s ease forwards; }
+#boxSuccess .success-icon { font-size: 64px; margin-bottom: 20px; }
+#boxSuccess .auth-sub { font-size: 15px; margin-bottom: 0; color: var(--t1); }
+#boxSuccess b { color: var(--p); font-weight: 900; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+</style>
+</head>
+<body>
+
+<div class="auth-container">
+  <div class="auth-card">
+    
+    <!-- REGISTRATION FORM -->
+    <div id="boxCreate" class="form-box">
+      <div class="auth-icon">🎓</div>
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-sub">Join AcademeForge to start learning today.</p>
+
+      <label class="form-label">Full Name</label>
+      <input id="createName" class="form-input" type="text" placeholder="Enter your full name"/>
+      
+      <label class="form-label">Phone Number</label>
+      <input id="createPhone" class="form-input" type="tel" placeholder="Enter 10-digit phone number"/>
+      
+      <label class="form-label">Email Address</label>
+      <input id="createEmail" class="form-input" type="email" placeholder="Enter email address"/>
+      
+      <label class="form-label">Create Password</label>
+      <input id="createPassword" class="form-input" type="password" placeholder="Create a strong password"/>
+
+      <!-- CONSENTS -->
+      <div class="consent-group">
+        <label class="consent-item">
+          <input type="checkbox" id="cbTerms" class="consent-checkbox">
+          <span class="consent-text">I agree to the <a href="https://academeforge.in/terms" target="_blank">Terms of Service</a> and <a href="https://academeforge.in/privacy" target="_blank">Privacy Policy</a> of AcademeForge.</span>
+        </label>
+        
+        <label class="consent-item">
+          <input type="checkbox" id="cbAge" class="consent-checkbox">
+          <span class="consent-text">I confirm that I am 13 years or older, or have parental consent to register.</span>
+        </label>
+      </div>
+
+      <div id="authMsg" class="msg-box"></div>
+
+      <button class="main-btn" id="btnSendOtp" onclick="sendCreateOtp()">Send Email OTP</button>
+
+      <!-- OTP VERIFICATION AREA -->
+      <div id="createOtpArea" class="otp-area hidden">
+        <label class="form-label">Email OTP</label>
+        <input id="createOtp" class="form-input" type="text" maxlength="6" placeholder="Enter OTP sent to your email"/>
+        <button class="main-btn" id="btnVerifyOtp" onclick="verifyCreateOtp()">Verify OTP & Create Account</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS VIEW -->
+    <div id="boxSuccess" class="form-box hidden">
+      <div class="success-icon">🎉</div>
+      <h2 class="auth-title">Account Created!</h2>
+      <p class="auth-sub">Congratulations, your account has been created.<br><br>Please open the <b>AF Nexus app</b> to login.</p>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+'use strict';
+
+const STUDENT_URL = "https://afooyyydhlwngzssgqih.supabase.co";
+const STUDENT_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmb295eXlkaGx3bmd6c3NncWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDQxMjgsImV4cCI6MjA5NDIyMDEyOH0.KG0XO0oP_2MpewHoIwTtbrKg5FkyOYRUtVzLH1MSJiE";
+
+const $ = id => document.getElementById(id);
+const cleanPhone = v => String(v||'').trim().replace(/\D/g,'');
+
+function showMsg(type, text) { const b=$('authMsg'); b.className='msg-box '+type; b.textContent=text||''; }
+function clearMsg() { const b=$('authMsg'); b.className='msg-box'; b.textContent=''; }
+
+let _sb = null;
+function getSb() {
+  if (_sb) return _sb;
+  _sb = supabase.createClient(STUDENT_URL, STUDENT_KEY);
+  return _sb;
+}
+
+async function edgeCall(fn, payload) {
+  try {
+    if (!navigator.onLine) return { ok:false, message:'No internet connection.' };
+    const sb = getSb();
+    const { data, error } = await sb.functions.invoke(fn, { body: payload||{} });
+    if (error) return { ok:false, message: error.message||'Request failed.' };
+    return data || { ok:false, message:'Empty response.' };
+  } catch(e) { return { ok:false, message: e.message||'Request failed.' }; }
+}
+
+let _pendingCreate = null;
+
+async function sendCreateOtp() {
+  clearMsg();
+  const name = ($('createName').value||'').trim();
+  const mobile = cleanPhone($('createPhone').value||'');
+  const email = ($('createEmail').value||'').trim().toLowerCase();
+  const password = ($('createPassword').value||'').trim();
+  
+  const cbTerms = $('cbTerms').checked;
+  const cbAge = $('cbAge').checked;
+
+  if (!name || name.length < 3) { showMsg('err', 'Enter your full name.'); return; }
+  if (!mobile || mobile.length < 10) { showMsg('err', 'Enter a valid 10-digit phone number.'); return; }
+  if (!email || !email.includes('@')) { showMsg('err', 'Enter a valid email address.'); return; }
+  if (!password || password.length < 6) { showMsg('err', 'Create a password with at least 6 characters.'); return; }
+  
+  if (!cbTerms || !cbAge) { 
+    showMsg('err', 'You must agree to the Terms of Service, Privacy Policy, and confirm your age to register.'); 
+    return; 
+  }
+
+  const btn = $('btnSendOtp');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  
+  showMsg('info', 'Checking availability…');
+  
+  const check = await edgeCall('student-check-existing-af', { mobile, email });
+  if (!check || !check.ok) { 
+    showMsg('err', check?.message || 'Could not check account availability.'); 
+    btn.disabled = false; btn.textContent = 'Send Email OTP'; return; 
+  }
+  if (check.mobile_exists || check.student_id_exists) { 
+    showMsg('err', 'This phone number is already registered.'); 
+    btn.disabled = false; btn.textContent = 'Send Email OTP'; return; 
+  }
+  if (check.email_exists) { 
+    showMsg('err', 'This email is already registered.'); 
+    btn.disabled = false; btn.textContent = 'Send Email OTP'; return; 
+  }
+  
+  _pendingCreate = { student_id: mobile, name, mobile, email, password, status: 'active', email_verified: false };
+  
+  showMsg('info', 'Sending OTP to your email…');
+  const otpRes = await edgeCall('student-send-otp-af', { email, mobile, purpose: 'create' });
+  
+  if (!otpRes || !otpRes.ok) { 
+    showMsg('err', 'OTP send failed: ' + (otpRes?.message || 'Server error.')); 
+    btn.disabled = false; btn.textContent = 'Send Email OTP'; return; 
+  }
+  
+  $('createOtpArea').classList.remove('hidden');
+  btn.classList.add('hidden'); // Hide the send button once OTP is sent
+  showMsg('ok', 'OTP sent to your email. Please verify to create your account.');
+}
+
+async function verifyCreateOtp() {
+  clearMsg();
+  const otp = ($('createOtp').value||'').trim();
+  if (!_pendingCreate) { showMsg('err', 'Please fill the form and send OTP first.'); return; }
+  if (!otp || otp.length < 4) { showMsg('err', 'Enter a valid OTP.'); return; }
+
+  const btn = $('btnVerifyOtp');
+  btn.disabled = true;
+  btn.textContent = 'Verifying...';
+  showMsg('info', 'Verifying OTP and creating account…');
+
+  const res = await edgeCall('student-create-af', Object.assign({}, _pendingCreate, { otp, purpose: 'create' }));
+  
+  if (!res || !res.ok) { 
+    showMsg('err', res?.message || 'Could not create account. Invalid OTP.'); 
+    btn.disabled = false; btn.textContent = 'Verify OTP & Create Account'; return; 
+  }
+  
+  // On Success - Switch Views
+  $('boxCreate').classList.add('hidden');
+  $('boxSuccess').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
