@@ -42,6 +42,36 @@ function clearOtpMsg(){
   if(otpMsgTxt) otpMsgTxt.textContent='';
 }
 
+/* ── FRIENDLY ERROR MAPPING ──────────────────────────
+   Technical/infra errors (network failures, SDK internals, missing
+   libraries) should never be shown to the user verbatim. This maps
+   them to plain-language copy while the real error is still logged
+   to the console for debugging. Messages that come back from our own
+   edge functions (data.message) are already user-facing and are NOT
+   passed through this mapper — they're trusted as-is.          ─── */
+function friendlyErrorMessage(e, context){
+  const raw = (e && (e.message || e.error_description || String(e))) || '';
+  // eslint-disable-next-line no-console
+  console.error(`[AcademeForge${context ? ' · '+context : ''}] Technical error:`, e);
+
+  if(/failed to fetch|networkerror|network request failed|load failed/i.test(raw)){
+    return 'We couldn\u2019t reach our servers. Please check your internet connection and try again.';
+  }
+  if(/timeout|timed out/i.test(raw)){
+    return 'That took too long to respond. Please try again in a moment.';
+  }
+  if(/supabase client library failed to load/i.test(raw)){
+    return 'This page didn\u2019t load correctly. Please refresh and try again.';
+  }
+  if(/functionshttperror|non-2xx|edge function/i.test(raw)){
+    return 'Our server had trouble processing that. Please try again in a moment.';
+  }
+  if(/functionsrelayerror|functionsfetcherror/i.test(raw)){
+    return 'We couldn\u2019t connect to our servers. Please try again in a moment.';
+  }
+  return 'Something went wrong on our end. Please try again in a moment.';
+}
+
 /* ── SUPABASE ───────────────────────────────────────── */
 const STUDENT_URL="https://afooyyydhlwngzssgqih.supabase.co";
 const STUDENT_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmb295eXlkaGx3bmd6c3NncWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDQxMjgsImV4cCI6MjA5NDIyMDEyOH0.KG0XO0oP_2MpewHoIwTtbrKg5FkyOYRUtVzLH1MSJiE";
@@ -57,13 +87,23 @@ function getSb(){
 }
 async function edgeCall(fn,payload){
   try{
-    if(!navigator.onLine) return {ok:false,message:'No internet connection.'};
+    if(!navigator.onLine){
+      return {ok:false,message:'You\u2019re offline. Please check your internet connection and try again.'};
+    }
     const sb=getSb();
     const{data,error}=await sb.functions.invoke(fn,{body:payload||{}});
-    if(error) return {ok:false,message:error.message||'Request failed.'};
-    return data||{ok:false,message:'Empty response.'};
+    if(error){
+      return {ok:false,message:friendlyErrorMessage(error, fn)};
+    }
+    if(!data){
+      console.error(`[AcademeForge · ${fn}] Empty response from edge function.`);
+      return {ok:false,message:'We didn\u2019t get a response from the server. Please try again.'};
+    }
+    // data.message (when data.ok === false) is authored by our own edge
+    // function and is already user-facing — pass it through untouched.
+    return data;
   }catch(e){
-    return {ok:false,message:e.message||'Request failed.'};
+    return {ok:false,message:friendlyErrorMessage(e, fn)};
   }
 }
 
@@ -90,7 +130,7 @@ async function sendCreateOtp(){
   showMsg('info','Checking account availability…');
 
   const check=await edgeCall('student-check-existing-af',{mobile,email});
-  if(!check||!check.ok){ showMsg('err',check?.message||'Could not verify availability.'); btn.disabled=false; btn.textContent='Sign Up'; return; }
+  if(!check||!check.ok){ showMsg('err',check?.message||'We couldn\u2019t check account availability right now. Please try again.'); btn.disabled=false; btn.textContent='Sign Up'; return; }
   if(check.mobile_exists||check.student_id_exists){ showMsg('err','This phone number is already registered.'); btn.disabled=false; btn.textContent='Sign Up'; return; }
   if(check.email_exists){ showMsg('err','This email address is already registered.'); btn.disabled=false; btn.textContent='Sign Up'; return; }
 
@@ -98,17 +138,37 @@ async function sendCreateOtp(){
 
   showMsg('info','Sending verification code to your email…');
   const otpRes=await edgeCall('student-send-otp-af',{email,mobile,purpose:'create'});
-  if(!otpRes||!otpRes.ok){ showMsg('err','Could not send code: '+(otpRes?.message||'Server error.')); btn.disabled=false; btn.textContent='Sign Up'; return; }
+  if(!otpRes||!otpRes.ok){ showMsg('err',otpRes?.message||'We couldn\u2019t send your verification code. Please try again.'); btn.disabled=false; btn.textContent='Sign Up'; return; }
 
-  // Show OTP area, hide the sign-up form's submit button, lock fields
+  // Swap views: hide the sign-up form entirely, show the OTP form in its place
+  document.getElementById('boxCreate').classList.add('hidden');
   document.getElementById('createOtpArea').classList.remove('hidden');
   document.getElementById('otpEmailDisplay').textContent=email;
-  btn.classList.add('hidden');
-  ['createName','createPhone','createEmail','createPassword'].forEach(id=>document.getElementById(id).disabled=true);
-  document.getElementById('cbTerms').disabled=true;
-  document.getElementById('cbAge').disabled=true;
-  showMsg('ok','Verification code sent. Check your email and enter it below.');
+  document.getElementById('createOtp').value='';
+  btn.disabled=false; btn.textContent='Sign Up';
+  showOtpMsg('ok','Verification code sent. Check your email and enter it below.');
+  clearMsg();
+}
+
+/* ── BACK TO SIGN-UP FORM ("Change email") ──────────── */
+function backToSignupForm(){
   clearOtpMsg();
+  document.getElementById('createOtpArea').classList.add('hidden');
+  document.getElementById('boxCreate').classList.remove('hidden');
+  document.getElementById('createOtp').value='';
+
+  // Re-enable fields that were locked while the OTP step was active
+  ['createName','createPhone','createEmail','createPassword'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.disabled=false;
+  });
+  const cbTerms=document.getElementById('cbTerms');
+  if(cbTerms) cbTerms.disabled=false;
+  const cbAge=document.getElementById('cbAge');
+  if(cbAge) cbAge.disabled=false;
+
+  const btn=document.getElementById('btnSendOtp');
+  if(btn){ btn.classList.remove('hidden'); btn.disabled=false; btn.textContent='Sign Up'; }
 }
 
 /* ── RESEND ─────────────────────────────────────────── */
@@ -118,7 +178,7 @@ async function resendOtp(){
   showOtpMsg('info','Resending code…');
   const res=await edgeCall('student-send-otp-af',{email:_pendingCreate.email,mobile:_pendingCreate.mobile,purpose:'create'});
   if(res?.ok) showOtpMsg('ok','A new code has been sent to your email.');
-  else showOtpMsg('err',res?.message||'Could not resend code.');
+  else showOtpMsg('err',res?.message||'We couldn\u2019t resend the code. Please try again.');
 }
 
 /* ── STEP 2: VERIFY OTP & CREATE ────────────────────── */
@@ -134,7 +194,7 @@ async function verifyCreateOtp(){
 
   const res=await edgeCall('student-create-af',Object.assign({},_pendingCreate,{otp,purpose:'create'}));
   if(!res||!res.ok){
-    showOtpMsg('err',res?.message||'Incorrect code or account creation failed.');
+    showOtpMsg('err',res?.message||'That code didn\u2019t work, or we couldn\u2019t create your account. Please try again.');
     btn.disabled=false; btn.textContent='Verify & Create Account';
     return;
   }
