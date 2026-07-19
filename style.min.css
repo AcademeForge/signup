@@ -636,3 +636,411 @@ body {
 #captcha-submit:active{transform:translateY(0);}
 .cap-hint{font-size:0.78rem;color:var(--text-muted);margin-top:0.85rem;}
 body.cap-locked{overflow:hidden;}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE-FIRST RESPONSIVE — SIGNUP PAGE
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Tablet & below (< 768px) ──────────────────────── */
+@media (max-width: 767px) {
+
+  /* Give main breathing room but not so much it pushes modal off */
+  .main-content {
+    padding: 1rem;
+    align-items: flex-start;
+  }
+
+  /* Modal fills the screen width, no rigid min-height */
+  .split-modal {
+    border-radius: 20px;
+    min-height: unset;
+    width: 100%;
+  }
+
+  /* Right pane takes all the space */
+  .split-right {
+    padding: 2rem 1.5rem 2rem;
+    justify-content: flex-start;
+  }
+
+  /* Shrink the big heading */
+  .form-title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Name + Phone side-by-side is too cramped — stack them */
+  .field-row {
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 0;
+  }
+
+  /* Inputs: slightly smaller touch target still fine */
+  .field-input {
+    height: 46px;
+    font-size: 1rem;
+  }
+
+  /* Consent text stays readable */
+  .consent-text {
+    font-size: 0.82rem;
+  }
+
+  /* Button full-width with good height */
+  .btn-primary {
+    height: 50px;
+    font-size: 0.95rem;
+  }
+
+  /* Tighten divider */
+  .divider {
+    margin: 1.25rem 0;
+  }
+
+  /* OTP input — full keyboard width */
+  .otp-input {
+    font-size: 1.1rem;
+    letter-spacing: 0.4rem;
+  }
+
+  /* Add brand logo at top of form on mobile (since left pane is hidden) */
+  .split-right::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: url('https://academeforge.in/IMG/logo.png') center/contain no-repeat;
+    margin: 0 auto 1rem;
+  }
+}
+
+/* ── Small mobile (< 480px) ────────────────────────── */
+@media (max-width: 479px) {
+
+  /* Remove all outer padding — modal goes edge-to-edge */
+  .main-content {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  /* Full-bleed card, squared off at very bottom of viewport */
+  .split-modal {
+    border-radius: 0;
+    min-height: 100dvh;
+    box-shadow: none;
+  }
+
+  /* More breathing room in tight space */
+  .split-right {
+    padding: 1.75rem 1.25rem 2rem;
+  }
+
+  .form-title {
+    font-size: 1.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .form-container {
+    max-width: 100%;
+  }
+
+  /* Inputs fill width comfortably */
+  .field-input {
+    height: 48px;
+    border-radius: 10px;
+  }
+
+  .btn-primary {
+    border-radius: 10px;
+    height: 52px;
+  }
+
+  /* OTP action row stacks neatly */
+  .action-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Message boxes */
+  .msg {
+    padding: 0.75rem;
+    font-size: 0.82rem;
+  }
+
+  /* Close button — nudge in */
+  .close-btn {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  /* Captcha box goes edge-to-edge with no card gap */
+  #captcha-box {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding: 2rem 1.25rem 1.75rem;
+    max-width: 100%;
+  }
+
+  #captcha-overlay {
+    align-items: center;
+    padding: 0;
+  }
+
+  #cap-canvas {
+    height: 60px;
+  }
+
+  #captcha-input {
+    font-size: 1.2rem;
+    letter-spacing: 0.35em;
+    height: 50px;
+  }
+}
+
+/* ── Very small (< 360px — old Android, Galaxy Fold closed) */
+@media (max-width: 359px) {
+
+  .split-right {
+    padding: 1.5rem 1rem 1.75rem;
+  }
+
+  .form-title {
+    font-size: 1.4rem;
+  }
+
+  .field-input {
+    font-size: 0.9rem;
+  }
+
+  .consent-text {
+    font-size: 0.78rem;
+  }
+
+  #captcha-box {
+    padding: 1.75rem 1rem 1.5rem;
+  }
+
+  #cap-canvas {
+    height: 54px;
+  }
+
+  #captcha-input {
+    font-size: 1.1rem;
+    letter-spacing: 0.25em;
+    height: 46px;
+  }
+
+  .cap-hint {
+    font-size: 0.72rem;
+  }
+}
+
+/* ── Landscape phone (short viewport) ──────────────── */
+@media (max-height: 600px) and (max-width: 767px) {
+
+  .main-content {
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .split-modal {
+    border-radius: 0;
+    min-height: 100dvh;
+  }
+
+  .split-right {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .form-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .field-group {
+    margin-bottom: 0.9rem;
+  }
+
+  .consent-group {
+    margin-bottom: 1rem;
+  }
+
+  .divider {
+    margin: 0.9rem 0;
+  }
+
+  /* Captcha: compact for landscape */
+  #captcha-box {
+    padding: 1.25rem 1.5rem;
+  }
+
+  #captcha-box .cap-logo {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 0.5rem;
+  }
+
+  #captcha-box .cap-sub {
+    margin-bottom: 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  #cap-canvas {
+    height: 54px;
+  }
+
+  #cap-canvas-wrap {
+    margin-bottom: 0.75rem;
+  }
+
+  #captcha-input {
+    height: 44px;
+    margin-bottom: 0.6rem;
+  }
+
+  #captcha-submit {
+    height: 44px;
+  }
+
+  .cap-hint {
+    margin-top: 0.5rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE FOOTER ACCORDION
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Desktop: accordion controls hidden, grid stays ── */
+.footer-acc-toggle {
+  display: none;
+}
+
+/* ── Mobile (< 768px): switch to accordion ────────── */
+@media (max-width: 767px) {
+
+  /* Reset the multi-col grid to single full-width column */
+  .footer-nav {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  /* Brand col stays normal, full width */
+  .brand-col {
+    grid-column: 1 !important;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #1f2937;
+    margin-bottom: 0;
+  }
+
+  /* Each accordion section gets a divider */
+  .footer-acc {
+    border-bottom: 1px solid #1f2937;
+  }
+
+  /* Toggle button — full row, flex between label and icon */
+  .footer-acc-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1rem 0;
+    text-align: left;
+  }
+
+  .footer-acc-toggle h4 {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    color: var(--primary);
+    transition: color 0.2s;
+  }
+
+  .footer-acc-toggle[aria-expanded="true"] h4 {
+    color: #fff;
+  }
+
+  /* Arrow icon */
+  .footer-acc-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    color: var(--primary);
+  }
+
+  .footer-acc-icon::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform 0.3s ease;
+  }
+
+  .footer-acc-toggle[aria-expanded="true"] .footer-acc-icon {
+    color: #fff;
+  }
+
+  .footer-acc-toggle[aria-expanded="true"] .footer-acc-icon::before {
+    transform: rotate(-135deg) translateY(-2px);
+  }
+
+  /* Body: hidden by default, animate open */
+  .footer-acc-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease, padding 0.25s ease;
+    padding-bottom: 0;
+  }
+
+  .footer-acc-body.is-open {
+    max-height: 600px;
+    padding-bottom: 1rem;
+  }
+
+  /* Links inside accordion */
+  .footer-acc-body a {
+    display: block;
+    padding: 0.45rem 0;
+    font-size: 0.88rem;
+    color: #9ca3af;
+    margin-bottom: 0;
+    border: none;
+  }
+
+  /* On desktop these are shown in grid; on mobile only show via accordion */
+  .footer-acc > a {
+    display: none;
+  }
+
+  /* Footer bottom: stack neatly */
+  .footer-bottom {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.25rem !important;
+    padding-top: 1.5rem !important;
+    margin-top: 1.25rem !important;
+  }
+
+  /* Hide desktop theme switcher on mobile */
+  .desktop-theme-controls {
+    display: none;
+  }
+
+  /* Social icons centered */
+  .footer-bottom > div:last-child {
+    justify-content: center !important;
+  }
+}
