@@ -419,6 +419,23 @@ body {
   grid-template-columns: minmax(200px, 1.4fr) repeat(5, minmax(120px, 1fr));
   gap: 2rem;
 }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-light);
+  padding-top: 24px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.brand-contact {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .brand-col {
   grid-column: 1;
 }
@@ -520,6 +537,10 @@ body {
     gap: 1.75rem 1rem;
   }
 
+  .brand-col {
+    grid-column: 1 / -1;
+  }
+
   .footer-bottom {
     flex-direction: column;
     align-items: center;
@@ -536,10 +557,18 @@ body {
   .footer-nav {
     grid-template-columns: 1fr;
   }
+}
 
-  .brand-col {
-    grid-column: 1;
-  }
+.footer-social-link {
+  color: var(--text-secondary);
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  display: inline-flex;
+}
+
+.footer-social-link:hover {
+  opacity: 1;
+  color: var(--text-secondary);
 }
 
 /* ── CAPTCHA OVERLAY ─────────────────────────────────── */
