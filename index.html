@@ -1,19 +1,200 @@
-<!doctype html><html lang="en" data-theme="light"><head><script>(()=>{var v=localStorage.getItem("af_dark_mode");var isDark;if(v==="1")isDark=true;else if(v==="0")isDark=false;else isDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.setAttribute("data-theme",isDark?"dark":"light")})()</script><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffe6e1"><title>Create your AcademeForge Account</title><link rel="icon" href="https://academeforge.in/IMG/logo.png"><link rel="shortcut icon" href="https://academeforge.in/IMG/logo.png"><link rel="apple-touch-icon" href="https://academeforge.in/IMG/logo.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.min.css?v=6.0"></head><body>
-<!-- CAPTCHA OVERLAY -->
-<div id="captcha-overlay">
-  <div id="captcha-box">
-    <img src="https://academeforge.in/IMG/logo.png" alt="AcademeForge" class="cap-logo" onerror='this.style.display="none"'>
-    <p class="cap-title">One step before you enter.</p>
-    <p class="cap-sub">Type the characters shown below to continue to AcademeForge.</p>
-    <div id="cap-canvas-wrap">
-      <canvas id="cap-canvas" width="270" height="68"></canvas>
-      <button id="cap-refresh-icon" type="button" title="Get a new code" aria-label="Refresh CAPTCHA">&#x21BB;</button>
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffe6e1" />
+  <title>Create your AcademeForge Account</title>
+  <link rel="icon" type="image/png" href="/IMG/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://academeforge.in/assets/css/style.min.css?v=6.0" />
+  <link rel="stylesheet" href="style.min.css?v=6.0" />
+</head>
+<body>
+
+  <!-- =========================================================
+       NAVIGATION
+  ========================================================= -->
+  <div id="site-header"></div>
+
+  <!-- =========================================================
+       CAPTCHA OVERLAY
+  ========================================================= -->
+  <div id="captcha-overlay">
+    <div id="captcha-box">
+      <img src="https://academeforge.in/IMG/logo.png" alt="AcademeForge" class="cap-logo" onerror='this.style.display="none"' />
+      <p class="cap-title">One step before you enter.</p>
+      <p class="cap-sub">Type the characters shown below to continue to AcademeForge.</p>
+      <div id="cap-canvas-wrap">
+        <canvas id="cap-canvas" width="270" height="68"></canvas>
+        <button id="cap-refresh-icon" type="button" title="Get a new code" aria-label="Refresh CAPTCHA">&#x21BB;</button>
+      </div>
+      <input
+        id="captcha-input"
+        type="text"
+        maxlength="6"
+        placeholder="_ _ _ _ _ _"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="characters"
+        spellcheck="false"
+        aria-label="Enter the characters shown"
+      />
+      <div id="captcha-msg"></div>
+      <button id="captcha-submit" type="button">Confirm &amp; Continue &#x2192;</button>
+      <p class="cap-hint">Not case-sensitive &middot; 6 characters</p>
     </div>
-    <input id="captcha-input" type="text" maxlength="6" placeholder="_ _ _ _ _ _" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Enter the characters shown">
-    <div id="captcha-msg"></div>
-    <button id="captcha-submit" type="button">Confirm &amp; Continue &#x2192;</button>
-    <p class="cap-hint">Not case-sensitive &middot; 6 characters</p>
   </div>
-</div>
-<!-- END CAPTCHA -->
-<div class="page-bg"></div><main class="main-content"><div class="split-modal"><a href="https://academeforge.in/" class="close-btn" aria-label="Close"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></a><div class="split-left"><img src="https://academeforge.in/IMG/signup_hero.jpg" alt="AcademeForge Signup Illustration" class="hero-image"><div class="brand-overlay"><img src="https://academeforge.in/IMG/logo.png" alt="Logo" class="logo-sm" onerror='this.style.display="none"'> <span>AcademeForge</span></div></div><div class="split-right"><form id="boxCreate" class="form-container" onsubmit="event.preventDefault(),sendCreateOtp()"><h1 class="form-title">Sign Up</h1><div class="field-row"><div class="field-group"><label class="field-label" for="createName">Full Name</label><div class="input-wrapper"><span class="input-icon">👤</span> <input id="createName" class="field-input" type="text" placeholder="Your full name" autocomplete="name"></div></div><div class="field-group"><label class="field-label" for="createPhone">Phone</label><div class="input-wrapper phone-wrapper"><span class="input-icon">📱</span> <input id="createPhone" class="field-input phone-input" type="tel" placeholder="Phone number" maxlength="10" autocomplete="tel-national" inputmode="numeric"></div></div></div><div class="field-group"><label class="field-label" for="createEmail">Email</label><div class="input-wrapper"><span class="input-icon">✉️</span> <input id="createEmail" class="field-input" type="email" placeholder="you@example.com" autocomplete="email"></div></div><div class="field-group"><label class="field-label" for="createPassword">Password</label><div class="input-wrapper pw-wrap"><span class="input-icon">🔒</span> <input id="createPassword" class="field-input" type="password" placeholder="Create a password" autocomplete="new-password"> <button class="pw-eye" type="button" onclick="togglePw()" id="pwEye" aria-label="Show password"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div><div class="consent-group"><label class="consent-item"><input type="checkbox" id="cbTerms" class="consent-cb"> <span class="consent-text">I agree to the <a href="https://academeforge.in/terms/index.html" target="_blank">Terms</a> & <a href="https://academeforge.in/privacy/index.html" target="_blank">Privacy Policy</a>.</span></label> <label class="consent-item"><input type="checkbox" id="cbAge" class="consent-cb"> <span class="consent-text">I confirm I am 13+ years old.</span></label></div><div id="authMsg" class="msg hidden"><span class="msg-txt" id="msgTxt"></span></div><button class="btn-primary" type="submit" id="btnSendOtp">Sign Up</button><div class="divider"><span>Got questions?</span></div><div class="login-link"><a href="https://academeforge.in/faq/index.html">We've got answers.</a></div></form><form id="createOtpArea" class="form-container hidden" onsubmit="event.preventDefault(),verifyCreateOtp()"><h2 class="form-title">Verify Email</h2><p class="section-desc">Code sent to <strong id="otpEmailDisplay"></strong>.</p><div class="field-group"><label class="field-label" for="createOtp">Verification Code</label><div class="input-wrapper"><input id="createOtp" class="field-input otp-input" type="text" placeholder="000000" maxlength="6" autocomplete="one-time-code" inputmode="numeric"></div></div><div id="otpMsg" class="msg hidden"><span class="msg-txt" id="otpMsgTxt"></span></div><button class="btn-primary" type="submit" id="btnVerifyOtp">Verify & Create Account</button><div class="action-row" style="margin-top:1rem;display:flex;justify-content:space-between"><button class="link-secondary" type="button" id="btnResend" onclick="resendOtp()">Resend Code</button> <button type="button" class="link-secondary" onclick="backToSignupForm()">Change email</button></div></form><div id="boxSuccess" class="form-container hidden"><h2 class="form-title">Account Created!</h2><p class="section-desc">Your AcademeForge account has been successfully created.</p><a href="https://academeforge.in/" class="btn-primary" style="display:inline-block;text-align:center;text-decoration:none;line-height:52px">Continue to Login</a></div></div></div></main><footer class="footer bg-dark"><div class="container"><div class="footer-nav"><div class="footer-col brand-col"><a href="/" class="brand"><img src="https://academeforge.in/IMG/logo.png" alt="AcademeForge" width="24" height="24" loading="lazy" decoding="async" onerror='this.style.display="none"'><div class="brand-text-wrapper"><span class="brand-text">AcademeForge</span> <span class="brand-tagline i18n-text">LEARNING BEYOND THE CLASSROOM</span></div></a><div class="brand-contact"><a href="mailto:help@academeforge.in">help@academeforge.in</a></div></div><div class="footer-col footer-acc"><button class="footer-acc-toggle" aria-expanded="false"><h4 class="i18n-text">Products</h4><span class="footer-acc-icon"></span></button><div class="footer-acc-body"><a href="https://nexus.academeforge.in" class="i18n-text">AF Nexus</a><a href="https://ai.academeforge.in" class="i18n-text">AcademeForge AI</a><a href="https://ast.academeforge.in" class="i18n-text">Scholars Test</a><a href="https://timezy.academeforge.in" class="i18n-text">Timezy</a><a href="https://capacity.academeforge.in" class="i18n-text">Capacity</a><a href="https://zenopulsky.academeforge.in" class="i18n-text">Zenopulsky</a><a href="https://nexora.academeforge.in" class="i18n-text">Nexora Studio</a><a href="https://shop.academeforge.in" class="i18n-text">AF Bazzar</a><a href="https://sudoku.academeforge.in" class="i18n-text">Sudoku Master</a><a href="https://ticxotoe.academeforge.in" class="i18n-text">Tic-XO-Toe</a></div></div><div class="footer-col footer-acc"><button class="footer-acc-toggle" aria-expanded="false"><h4 class="i18n-text">Internship</h4><span class="footer-acc-icon"></span></button><div class="footer-acc-body"><a href="https://academeforge.in/internship/apply/index.html" class="i18n-text">Apply</a><a href="https://academeforge.in/internship/status/index.html" class="i18n-text">Application Status</a><a href="https://academeforge.in/internship/policy/index.html" class="i18n-text">Workspace Policy</a></div></div><div class="footer-col footer-acc"><button class="footer-acc-toggle" aria-expanded="false"><h4 class="i18n-text">Other tools</h4><span class="footer-acc-icon"></span></button><div class="footer-acc-body"><a href="https://academeforge.in/other-tools/verify-certificate/index.html" class="i18n-text">Certificate Verification</a><a href="https://academeforge.in/other-tools/verify-team/index.html" class="i18n-text">Team Verification</a><a href="https://academeforge.in/other-tools/hopenext/index.html" class="i18n-text">HopeNext Portal</a></div></div><div class="footer-col footer-acc"><button class="footer-acc-toggle" aria-expanded="false"><h4 class="i18n-text">Resources</h4><span class="footer-acc-icon"></span></button><div class="footer-acc-body"><a href="https://download.academeforge.in" class="i18n-text">Download Center</a><a href="https://academeforge.in/faq/index.html" class="i18n-text">Help Desk</a><a href="https://academeforge.in/contact/index.html" class="i18n-text">Contact</a></div></div><div class="footer-col footer-acc"><button class="footer-acc-toggle" aria-expanded="false"><h4 class="i18n-text">Legal</h4><span class="footer-acc-icon"></span></button><div class="footer-acc-body"><a href="https://academeforge.in/legal/privacy/index.html" class="i18n-text">Privacy Policy</a><a href="https://academeforge.in/legal/terms/index.html" class="i18n-text">Terms of Service</a></div></div></div><div class="footer-bottom"><div style="font-size:13px;color:var(--text-secondary)">&copy; 2026 AcademeForge. <span class="i18n-text">All rights reserved.</span></div><div class="theme-controls desktop-theme-controls"><button class="theme-btn" data-theme="light" aria-label="Light mode" onclick='setThemeMode("light")'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></button> <button class="theme-btn active" data-theme="system" aria-label="System mode" onclick='setThemeMode("system")'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></button> <button class="theme-btn" data-theme="dark" aria-label="Dark mode" onclick='setThemeMode("dark")'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg></button></div><div style="display:flex;gap:16px"><a href="https://www.instagram.com/academeforge.in" target="_blank" rel="noopener noreferrer" class="footer-social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> </a><a href="https://x.com/AcademeForge?s=20" target="_blank" rel="noopener noreferrer" class="footer-social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg> </a><a href="https://www.linkedin.com/company/academeforge/" target="_blank" rel="noopener noreferrer" class="footer-social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg> </a><a href="https://youtube.com/@academeforgepro" target="_blank" rel="noopener noreferrer" class="footer-social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg> </a><a href="https://t.me/+46ubatq-EV0wNjY1" target="_blank" rel="noopener noreferrer" class="footer-social-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></a></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="script.min.js?v=6.0" defer="defer"></script><script src="https://academeforge.in/assets/js/include.js" defer="defer"></script><script>function setThemeMode(e){var t=window.matchMedia("(prefers-color-scheme: dark)").matches;let a=e;"system"===e?(a=t?"dark":"light",localStorage.setItem("af_dark_mode","system")):localStorage.setItem("af_dark_mode","dark"===e?"1":"0"),document.documentElement.setAttribute("data-theme",a),document.querySelectorAll(".theme-btn").forEach(e=>e.classList.remove("active"));t=document.querySelector(`.theme-btn[data-theme="${e}"]`);t&&t.classList.add("active")}document.addEventListener("DOMContentLoaded",()=>{var e=localStorage.getItem("af_dark_mode");let t="system";"1"===e?t="dark":"0"===e&&(t="light");e=document.querySelector(`.theme-btn[data-theme="${t}"]`);e&&e.classList.add("active")})</script></body></html>
+
+  <!-- =========================================================
+       MAIN CONTENT
+  ========================================================= -->
+  <div class="page-bg"></div>
+
+  <main class="main-content">
+    <div class="split-modal">
+
+      <a href="https://academeforge.in/" class="close-btn" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </a>
+
+      <!-- Left panel -->
+      <div class="split-left">
+        <img src="https://academeforge.in/IMG/signup_hero.jpg" alt="AcademeForge Signup Illustration" class="hero-image" />
+        <div class="brand-overlay">
+          <img src="https://academeforge.in/IMG/logo.png" alt="Logo" class="logo-sm" onerror='this.style.display="none"' />
+          <span>AcademeForge</span>
+        </div>
+      </div>
+
+      <!-- Right panel -->
+      <div class="split-right">
+
+        <!-- Step 1: Sign Up form -->
+        <form id="boxCreate" class="form-container" onsubmit="event.preventDefault(), sendCreateOtp()">
+          <h1 class="form-title">Sign Up</h1>
+
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label" for="createName">Full Name</label>
+              <div class="input-wrapper">
+                <span class="input-icon">👤</span>
+                <input id="createName" class="field-input" type="text" placeholder="Your full name" autocomplete="name" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="createPhone">Phone</label>
+              <div class="input-wrapper phone-wrapper">
+                <span class="input-icon">📱</span>
+                <input id="createPhone" class="field-input phone-input" type="tel" placeholder="Phone number" maxlength="10" autocomplete="tel-national" inputmode="numeric" />
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="createEmail">Email</label>
+            <div class="input-wrapper">
+              <span class="input-icon">✉️</span>
+              <input id="createEmail" class="field-input" type="email" placeholder="you@example.com" autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="createPassword">Password</label>
+            <div class="input-wrapper pw-wrap">
+              <span class="input-icon">🔒</span>
+              <input id="createPassword" class="field-input" type="password" placeholder="Create a password" autocomplete="new-password" />
+              <button class="pw-eye" type="button" onclick="togglePw()" id="pwEye" aria-label="Show password">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="consent-group">
+            <label class="consent-item">
+              <input type="checkbox" id="cbTerms" class="consent-cb" />
+              <span class="consent-text">
+                I agree to the
+                <a href="https://academeforge.in/terms/index.html" target="_blank">Terms</a>
+                &amp;
+                <a href="https://academeforge.in/privacy/index.html" target="_blank">Privacy Policy</a>.
+              </span>
+            </label>
+            <label class="consent-item">
+              <input type="checkbox" id="cbAge" class="consent-cb" />
+              <span class="consent-text">I confirm I am 13+ years old.</span>
+            </label>
+          </div>
+
+          <div id="authMsg" class="msg hidden">
+            <span class="msg-txt" id="msgTxt"></span>
+          </div>
+
+          <button class="btn-primary" type="submit" id="btnSendOtp">Sign Up</button>
+
+          <div class="divider"><span>Got questions?</span></div>
+          <div class="login-link">
+            <a href="https://academeforge.in/faq/index.html">We've got answers.</a>
+          </div>
+        </form>
+
+        <!-- Step 2: OTP verification -->
+        <form id="createOtpArea" class="form-container hidden" onsubmit="event.preventDefault(), verifyCreateOtp()">
+          <h2 class="form-title">Verify Email</h2>
+          <p class="section-desc">Code sent to <strong id="otpEmailDisplay"></strong>.</p>
+
+          <div class="field-group">
+            <label class="field-label" for="createOtp">Verification Code</label>
+            <div class="input-wrapper">
+              <input id="createOtp" class="field-input otp-input" type="text" placeholder="000000" maxlength="6" autocomplete="one-time-code" inputmode="numeric" />
+            </div>
+          </div>
+
+          <div id="otpMsg" class="msg hidden">
+            <span class="msg-txt" id="otpMsgTxt"></span>
+          </div>
+
+          <button class="btn-primary" type="submit" id="btnVerifyOtp">Verify &amp; Create Account</button>
+
+          <div class="action-row" style="margin-top: 1rem; display: flex; justify-content: space-between;">
+            <button class="link-secondary" type="button" id="btnResend" onclick="resendOtp()">Resend Code</button>
+            <button type="button" class="link-secondary" onclick="backToSignupForm()">Change email</button>
+          </div>
+        </form>
+
+        <!-- Step 3: Success -->
+        <div id="boxSuccess" class="form-container hidden">
+          <h2 class="form-title">Account Created!</h2>
+          <p class="section-desc">Your AcademeForge account has been successfully created.</p>
+          <a href="https://academeforge.in/" class="btn-primary" style="display: inline-block; text-align: center; text-decoration: none; line-height: 52px;">
+            Continue to Login
+          </a>
+        </div>
+
+      </div><!-- /.split-right -->
+    </div><!-- /.split-modal -->
+  </main>
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================= -->
+  <div id="site-footer"></div>
+
+  <!-- =========================================================
+       SCRIPTS
+  ========================================================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.min.js?v=6.0" defer></script>
+  <script src="https://academeforge.in/assets/js/include.js?v=3.0" defer></script>
+
+</body>
+</html>
